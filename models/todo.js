@@ -8,6 +8,9 @@ const listSchema = new mongoose.Schema(
         todoDesc: {
             type: String,
             required: true,
+        },
+        backgroundColor: {
+            type: String
         }
     }
 )
