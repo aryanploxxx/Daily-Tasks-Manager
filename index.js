@@ -39,6 +39,12 @@ app.post("/list", async (req,res)=> {
     return res.render("index", {all_lists:newList, message:"ToDo Inserted Successfully"})
 })
 
+app.delete("/list/:id",async (req,res)=> {
+    const id = req.params.id;
+    await List.deleteOne({ _id: ObjectId(id)});
+    const afterDelete = await List.find({});
+    return res.render("index", {all_lists: afterDelete, message:"ToDo Deleted Successfully"})
+})
 
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);

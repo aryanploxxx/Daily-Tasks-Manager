@@ -21,16 +21,17 @@
             </div>
             <button class="border-solid p-2 w-48 bg-sky-500 text-white hover:bg-sky-400" type="submit">Insert ToDo</button>
         </form>
-        <h2 class="text-1xl text-red"><%= message %></h2>
+        <h2 class="text-1xl text-red-500"><%= message %></h2>
     </div>
 
     <div>
         <% all_lists.forEach(list => { %>
             <div class="list-item">
-                <!-- Display list title -->
                 <h2>Title: <%= list.todoTitle %></h2>
-                <!-- Display list description -->
                 <p>Description: <%= list.todoDesc %></p>
+                <a href="/list/<%= list._id %>">
+                    <button class="border-solid p-1 w-24 rounded-full bg-red-500 text-white">Delete</button>
+                </a>
                 <hr>
             </div>
         <% }); %>
