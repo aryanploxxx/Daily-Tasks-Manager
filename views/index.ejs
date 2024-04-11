@@ -10,17 +10,18 @@
 <body>
     <div>
         <h2 class="text-2xl font-bold">Insert ToDo Here:</h2>
-        <form class="flex flex-col" action="/addList" method="POST">
+        <form class="flex flex-col" action="/list" method="POST">
             <div class="flex flex-row gap-10">
-                <label>Todo Title:</label>
+                <label for="todoTitle">Todo Title:</label>
                 <input class="border-solid border-2 border-black p-2" type="text" name="todoTitle" placeholder="Enter ToDo Title">
             </div>
             <div class="flex flex-row gap-5">
-                <label>Todo Description:</label>
-                <input class="border-solid border-2 border-black p-2" type="text" name="todoTitle" placeholder="Enter ToDo Description">
+                <label for="todoDesc">Todo Description:</label>
+                <input class="border-solid border-2 border-black p-2" type="text" name="todoDesc" placeholder="Enter ToDo Description">
             </div>
             <button class="border-solid p-2 w-48 bg-sky-500 text-white hover:bg-sky-400" type="submit">Insert ToDo</button>
         </form>
+        <h2 class="text-1xl text-red"><%= message %></h2>
     </div>
 
     <div>

@@ -9,6 +9,8 @@ app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 const List = require('./models/todo')
 
@@ -19,9 +21,23 @@ mongoose.connect(process.env.URL)
 app.get("/", async (req,res)=> {
     const lists = await List.find({})
     console.log(lists)
-    return res.render("index")
+    return res.render("index", {all_lists:lists, message:""})
 })
 
+app.post("/list", async (req,res)=> {
+    const title = req.body.todoTitle;
+    const desc = req.body.todoDesc;
+    const oldList = await List.find({});
+    if(!title || !desc) {
+        return res.render("index", {message:"Title or Description Cannot be empty!", all_lists:oldList})
+    }
+    console.log(title)
+    console.log(desc)
+    await List.create({ todoTitle: title, todoDesc: desc });
+    const newList = await List.find({});
+    console.log(newList)
+    return res.render("index", {all_lists:newList, message:"ToDo Inserted Successfully"})
+})
 
 
 app.listen(port, ()=> {
