@@ -8,34 +8,42 @@
     <title>ToDo List</title>
 </head>
 <body>
-    <div>
-        <h2 class="text-2xl font-bold">Insert ToDo Here:</h2>
-        <form class="flex flex-col" action="/list" method="POST">
-            <div class="flex flex-row gap-10">
-                <label for="todoTitle">Todo Title:</label>
-                <input class="border-solid border-2 border-black p-2" type="text" name="todoTitle" placeholder="Enter ToDo Title">
-            </div>
-            <div class="flex flex-row gap-5">
-                <label for="todoDesc">Todo Description:</label>
-                <input class="border-solid border-2 border-black p-2" type="text" name="todoDesc" placeholder="Enter ToDo Description">
-            </div>
-            <button class="border-solid p-2 w-48 bg-sky-500 text-white hover:bg-sky-400" type="submit">Insert ToDo</button>
-        </form>
-        <h2 class="text-1xl text-red-500"><%= message %></h2>
+<div class="flex justify-center">
+    <div class="w-1/2 mt-8 flex flex-col justify-center">
+        <div class="flex align-center flex-col gap-5">
+            <h2 class="text-3xl font-bold text-center">ToDo List</h2>
+            <form class="flex flex-col gap-5" action="/list" method="POST">
+                <div class="flex flex-row gap-5 items-center">
+                    <label class="w-32 text-right" for="todoTitle">Todo Title:</label>
+                    <input class="w-2/3 border-solid border-2 border-black-500 p-2" type="text" name="todoTitle" placeholder="Enter ToDo Title">
+                </div>
+                <div class="flex flex-row gap-5 items-center">
+                    <label class="w-32 text-right" for="todoDesc">Todo Description:</label>
+                    <input class="w-2/3 border-solid border-2 border-black-500 p-2" type="text" name="todoDesc" placeholder="Enter ToDo Description">
+                </div>
+                <div class="flex flex-row gap-5 items-center">
+                    <button></button>
+                    <button class="ms-32 p-2 w-48 bg-green-700 text-white hover:bg-green-600" type="submit">Insert ToDo</button>
+                </div>
+            </form>
+            <h2 class="text-1xl text-red-500"><%= message %></h2>
+        </div>
+        
+        <div class="my-5 flex flex-col w-2/3">
+            <% all_lists.forEach(list => { %>
+                <div class="p-7 mb-3 flex flex-col gap-4 rounded-[15px]  <%= list.backgroundColor %>">
+                    <div class="flex flex-row justify-between items-center">
+                        <p class="text-2xl font-bold text-wrap"><%= list.todoTitle %></p>
+                        <a href="/list/<%= list._id %>">
+                            <button class="p-1 w-24 rounded-full bg-red-500 text-white">Delete</button>
+                        </a>
+                    </div>
+                    <p class="text-wrap"><%= list.todoDesc %></p>
+                </div>
+            <% }); %>
+        </div>
     </div>
-
-    <div>
-        <% all_lists.forEach(list => { %>
-            <div class="list-item">
-                <h2>Title: <%= list.todoTitle %></h2>
-                <p>Description: <%= list.todoDesc %></p>
-                <a href="/list/<%= list._id %>">
-                    <button class="border-solid p-1 w-24 rounded-full bg-red-500 text-white">Delete</button>
-                </a>
-                <hr>
-            </div>
-        <% }); %>
-    </div>
+</div>
     
 </body>
 </html>

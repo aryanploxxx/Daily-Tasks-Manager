@@ -4,6 +4,7 @@ const path = require('path')
 const app = express()
 require('dotenv').config()
 const port = process.env.PORT || 3000;
+const router = express.Router()
 
 app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))
@@ -14,37 +15,20 @@ app.use(express.urlencoded({extended: true}));
 
 const List = require('./models/todo')
 
-mongoose.connect(process.env.URL)
-.then(()=>{ console.log("Database Connected.") })
-.catch((err)=>{ console.log(`Error Message: ${err}`)})
+const todoRouter = require('./routers/todo')
+app.use("/list", todoRouter)
 
 app.get("/", async (req,res)=> {
-    const lists = await List.find({})
+    const lists = await List.find({}).sort({ _id: -1 })
     console.log(lists)
+    
     return res.render("index", {all_lists:lists, message:""})
 })
 
-app.post("/list", async (req,res)=> {
-    const title = req.body.todoTitle;
-    const desc = req.body.todoDesc;
-    const oldList = await List.find({});
-    if(!title || !desc) {
-        return res.render("index", {message:"Title or Description Cannot be empty!", all_lists:oldList})
-    }
-    console.log(title)
-    console.log(desc)
-    await List.create({ todoTitle: title, todoDesc: desc });
-    const newList = await List.find({});
-    console.log(newList)
-    return res.render("index", {all_lists:newList, message:"ToDo Inserted Successfully"})
-})
+mongoose.connect(process.env.URL)
+    .then(()=>{ console.log("Database Connected.") })
+    .catch((err)=>{ console.log(`Error Message: ${err}`)})
 
-app.delete("/list/:id",async (req,res)=> {
-    const id = req.params.id;
-    await List.deleteOne({ _id: ObjectId(id)});
-    const afterDelete = await List.find({});
-    return res.render("index", {all_lists: afterDelete, message:"ToDo Deleted Successfully"})
-})
 
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);
