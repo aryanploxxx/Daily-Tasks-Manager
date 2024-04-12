@@ -1,3 +1,5 @@
+// Code is not using controllers as of now
+
 const List = require('../models/todo')
 
 function generatebackgroundColor() {
