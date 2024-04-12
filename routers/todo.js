@@ -24,13 +24,13 @@ router.post("/", async (req,res)=> {
     await List.create({ todoTitle: title, todoDesc: desc, backgroundColor: bgcolor});
     const newList = await List.find({}).sort({ _id: -1 });
     console.log(newList)
-    return res.render("index", {all_lists:newList, message:"ToDo Inserted Successfully"})
+    return res.redirect("/")
 })
 
 router.delete("/:id",async (req,res)=> {
     const id = req.params.id;
-    await List.deleteOne({ _id: ObjectId(id)});
-    const afterDelete = await List.find({});
+    await List.deleteOne({ _id: id});
+    const afterDelete = await List.find({}).sort({_id: -1});
     return res.render("index", {all_lists: afterDelete, message:"ToDo Deleted Successfully"})
 })
 

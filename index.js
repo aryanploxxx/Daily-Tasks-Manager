@@ -6,6 +6,9 @@ require('dotenv').config()
 const port = process.env.PORT || 3000;
 const router = express.Router()
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))
 app.use(express.static(path.join(__dirname, 'public')));
@@ -27,6 +30,14 @@ app.get("/", async (req,res)=> {
     // console.log(lists)
     return res.render("index", {all_lists:lists, message:""})
 })
+
+// app.delete("/list/:id",async (req,res)=> {
+//     const id = req.params.id;
+//     await List.deleteOne({ _id: id});
+//     const afterDelete = await List.find({}).sort({_id: -1});
+//     return res.render("index", {all_lists: afterDelete, message:"ToDo Deleted Successfully"})
+// })
+
 
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);

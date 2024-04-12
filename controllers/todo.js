@@ -29,9 +29,13 @@ async function insertNewList(req, res) {
 
 async function deleteUser(req, res) {
     const id = req.params.id;
-    await List.deleteOne({ _id: ObjectId(id)});
+    await List.deleteOne({ _id: id});
     const afterDelete = await List.find({});
     return res.render("index", {all_lists: afterDelete, message:"ToDo Deleted Successfully"})
+    /*
+        return res.redirect("/")
+        -> use flash to pass variables
+    */
 }
 
 module.export = {insertNewList, deleteUser};
