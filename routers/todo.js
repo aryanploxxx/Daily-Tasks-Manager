@@ -16,7 +16,7 @@ router.post("/", async (req,res)=> {
     const desc = req.body.todoDesc;
     const oldList = await List.find({}).sort({ _id: -1 });
     if(!title || !desc) {
-        return res.render("index", {message:"Title or Description Cannot be empty!", all_lists:oldList})
+        return res.render("index", {message:"Title or Description Cannot be empty!", all_lists:oldList,  todo:""})
     }
     console.log(title)
     console.log(desc)
@@ -31,7 +31,7 @@ router.delete("/:id",async (req,res)=> {
     const id = req.params.id;
     await List.deleteOne({ _id: id});
     const afterDelete = await List.find({}).sort({_id: -1});
-    return res.render("index", {all_lists: afterDelete, message:"ToDo Deleted Successfully"})
+    return res.render("index", {all_lists: afterDelete, message:"ToDo Deleted Successfully", todo:""})
 })
 
 module.exports = router

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>ToDo List</title>
+</head>
+<body>
+    <div class="flex justify-center">
+        <div class="w-1/2 mt-8 flex flex-col items-center">
+            <div class="flex align-center flex-col gap-5 w-full">
+                <h2 class="text-3xl font-bold text-center">Update ToDo</h2>
+                <form class="flex flex-col gap-5" action="/insertUpdated/<%= todo._id %>?_method=PUT" method="POST">
+                    <div class="flex flex-row gap-5 items-center">
+                        <label class="w-32 text-right" for="todoTitle" >Todo Title:</label>
+                        <input value="<%= todo.todoTitle %>" class="w-2/3 border-solid border-2 border-black-500 p-2" type="text" name="todoTitle" placeholder="Enter ToDo Title">
+                    </div>
+                    <div class="flex flex-row gap-5 items-center">
+                        <label class="w-32 text-right" for="todoDesc">Todo Description:</label>
+                        <input value="<%= todo.todoDesc %>" class="w-2/3 border-solid border-2 border-black-500 p-2" type="text" name="todoDesc" placeholder="Enter ToDo Description">
+                    </div>
+                    <div class="flex flex-row gap-5 items-center">
+                        <button></button>
+                        <button class="ms-32 p-2 w-48 bg-green-700 text-white hover:bg-green-600" type="submit">Update ToDo</button>
+                    </div>
+                </form>
+                <h2 class="text-1xl text-red-500"><%= message %></h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
